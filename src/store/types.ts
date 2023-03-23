@@ -4,12 +4,28 @@ export interface Book {
   authors: string[];
   description: string;
   thumbnail: string;
+  categories: string;
 }
+
+type Categories =
+  | ""
+  | "Art"
+  | "Biography"
+  | "Computers"
+  | "History"
+  | "Medical"
+  | "Poetry";
+
+type Orders = "relevance" | "newest";
 
 export interface BooksState {
   books: Book[];
   isLoading: boolean;
   error: string | null;
+  selectedCategory: Categories;
+  selectedOrder: Orders;
+  paginationStep: number;
+  startIndex: 0;
 }
 
 export enum BooksActionTypes {
