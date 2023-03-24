@@ -3,15 +3,26 @@ import { Book, BooksState, BookAPIResponse, BookAPIItem } from "./types";
 
 const initialState: BooksState = {
   books: [],
+  totalFindItems: 0,
   isLoading: false,
   error: null,
   selectedCategory: "",
   selectedOrder: "relevance",
-  paginationStep: 2,
+  paginationStep: 30,
   startIndex: 0,
+  singleBook: {
+    id: "",
+    title: "",
+    authors: [],
+    description: "",
+    thumbnail: "",
+    categories: "",
+  },
 };
 
 const API_KEY = process.env.REACT_APP_API_KEY;
+
+let totalFindItems = 0;
 
 export const fetchBooks = createAsyncThunk<
   Book[],
@@ -31,9 +42,11 @@ export const fetchBooks = createAsyncThunk<
       throw new Error("Network response was not ok");
     }
     const data = (await response.json()) as BookAPIResponse;
-    // console.log(data);
-    if (data.totalItems) {
-      return data.items.map((item: any) => ({
+    console.log(data);
+    if (data.totalItems && data.items.length) {
+      totalFindItems = data.totalItems;
+
+      return data.items?.map((item: any) => ({
         id: item.id,
         title: item.volumeInfo.title,
         authors: item.volumeInfo.authors,
@@ -42,24 +55,45 @@ export const fetchBooks = createAsyncThunk<
         categories: item.volumeInfo.categories,
       }));
     } else {
-      throw new Error(`Can't find "${query}" book`);
+      throw new Error(`Can't find this book`);
     }
   } catch (error: any) {
     return rejectWithValue(error.message);
   }
 });
 
-// export const changeStartIndex = createAsyncThunk<
-//   void,
-//   number,
-//   { rejectValue: string }
-// >("books/changeStartIndex", async (payload, { rejectWithValue }) => {
-//   try {
-//     return payload;
-//   } catch (error: any) {
-//     return rejectWithValue(error.message);
-//   }
-// });
+export const fetchSingleBook = createAsyncThunk<
+  Book,
+  string,
+  { rejectValue: string }
+>("books/fetchSingleBook", async (id, { rejectWithValue }) => {
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/books/v1/volumes/${id}`
+    );
+
+    console.log(`https://www.googleapis.com/books/v1/volumes/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    console.log(data);
+
+    return {
+      id: data.id,
+      title: data.volumeInfo?.title,
+      authors: data.volumeInfo?.authors,
+      description: data.volumeInfo?.description,
+      thumbnail: data.volumeInfo?.imageLinks?.thumbnail,
+      categories: data.volumeInfo?.categories,
+    };
+  } catch (error: any) {
+    console.log({ error });
+    return rejectWithValue(error.message as string);
+  }
+});
 
 export const booksSlice = createSlice({
   name: "books",
@@ -72,7 +106,6 @@ export const booksSlice = createSlice({
       state.selectedOrder = action.payload;
     },
     changeStartIndex: (state, action) => {
-      console.log("change index");
       state.startIndex = action.payload;
     },
   },
@@ -84,7 +117,7 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.type);
+        state.totalFindItems = totalFindItems;
         if (state.startIndex > 0) {
           state.books = [...state.books, ...action.payload];
         } else {
@@ -92,6 +125,18 @@ export const booksSlice = createSlice({
         }
       })
       .addCase(fetchBooks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload ?? "Something went wrong.";
+      })
+      .addCase(fetchSingleBook.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchSingleBook.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.singleBook = action.payload;
+      })
+      .addCase(fetchSingleBook.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? "Something went wrong.";
       });

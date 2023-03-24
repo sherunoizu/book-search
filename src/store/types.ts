@@ -20,12 +20,14 @@ type Orders = "relevance" | "newest";
 
 export interface BooksState {
   books: Book[];
+  totalFindItems: number;
   isLoading: boolean;
   error: string | null;
   selectedCategory: Categories;
   selectedOrder: Orders;
   paginationStep: number;
   startIndex: 0;
+  singleBook: Book;
 }
 
 export enum BooksActionTypes {
@@ -64,86 +66,86 @@ export type BooksAction =
   | FetchBooksFailureAction;
 
 export interface BookAPIItem {
-  accessInfo: {
-    accessViewStatus: string;
-    country: string;
-    embeddable: boolean;
-    epub: {
-      isAvailable: boolean;
+  accessInfo?: {
+    accessViewStatus?: string;
+    country?: string;
+    embeddable?: boolean;
+    epub?: {
+      isAvailable?: boolean;
     };
-    pdf: {
-      acsTokenLink: string;
-      isAvailable: boolean;
+    pdf?: {
+      acsTokenLink?: string;
+      isAvailable?: boolean;
     };
-    publicDomain: boolean;
-    quoteSharingAllowed: boolean;
-    textToSpeechPermission: string;
-    viewability: string;
-    webReaderLink: string;
+    publicDomain?: boolean;
+    quoteSharingAllowed?: boolean;
+    textToSpeechPermission?: string;
+    viewability?: string;
+    webReaderLink?: string;
   };
-  etag: string;
-  id: string;
-  kind: string;
-  saleInfo: {
-    buyLink: string;
-    country: string;
-    isEbook: boolean;
-    listPrice: {
-      amount: number;
-      currencyCode: string;
+  etag?: string;
+  id?: string;
+  kind?: string;
+  saleInfo?: {
+    buyLink?: string;
+    country?: string;
+    isEbook?: boolean;
+    listPrice?: {
+      amount?: number;
+      currencyCode?: string;
     };
-    offers: {
-      finskyOfferType: number;
-      listPrice: {
-        amountInMicros: number;
-        currencyCode: string;
+    offers?: {
+      finskyOfferType?: number;
+      listPrice?: {
+        amountInMicros?: number;
+        currencyCode?: string;
       };
-      retailPrice: {
-        amountInMicros: number;
-        currencyCode: string;
+      retailPrice?: {
+        amountInMicros?: number;
+        currencyCode?: string;
       };
     }[];
-    retailPrice: {
-      amountInMicros: number;
-      currencyCode: string;
+    retailPrice?: {
+      amountInMicros?: number;
+      currencyCode?: string;
     };
-    saleability: string;
+    saleability?: string;
   };
-  searchInfo: {
-    textSnippet: string;
+  searchInfo?: {
+    textSnippet?: string;
   };
-  selfLink: string;
-  volumeInfo: {
-    allowAnonLogging: boolean;
+  selfLink?: string;
+  volumeInfo?: {
+    allowAnonLogging?: boolean;
     authors?: string[];
-    canonicalVolumeLink: string;
-    categories: string[];
-    contentVersion: string;
-    description: string;
-    imageLinks: {
-      smallThumbnail: string;
-      thumbnail: string;
+    canonicalVolumeLink?: string;
+    categories?: string[];
+    contentVersion?: string;
+    description?: string;
+    imageLinks?: {
+      smallThumbnail?: string;
+      thumbnail?: string;
     };
-    industryIdentifiers: {
-      identifier: string;
-      type: string;
+    industryIdentifiers?: {
+      identifier?: string;
+      type?: string;
     }[];
-    infoLink: string;
-    language: string;
-    maturityRating: string;
-    pageCount: number;
-    panelizationSummary: {
-      containsEpubBubbles: boolean;
-      containsImageBubbles: boolean;
+    infoLink?: string;
+    language?: string;
+    maturityRating?: string;
+    pageCount?: number;
+    panelizationSummary?: {
+      containsEpubBubbles?: boolean;
+      containsImageBubbles?: boolean;
     };
-    previewLink: string;
-    printType: string;
-    publishedDate: string;
-    publisher: string;
-    readingModes: {
-      image: boolean;
-      text: boolean;
+    previewLink?: string;
+    printType?: string;
+    publishedDate?: string;
+    publisher?: string;
+    readingModes?: {
+      image?: boolean;
+      text?: boolean;
     };
-    title: string;
+    title?: string;
   };
 }
