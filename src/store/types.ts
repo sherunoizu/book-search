@@ -7,16 +7,9 @@ export interface Book {
   categories: string;
 }
 
-type Categories =
-  | ""
-  | "Art"
-  | "Biography"
-  | "Computers"
-  | "History"
-  | "Medical"
-  | "Poetry";
+type Categories = '' | 'Art' | 'Biography' | 'Computers' | 'History' | 'Medical' | 'Poetry';
 
-type Orders = "relevance" | "newest";
+type Orders = 'relevance' | 'newest';
 
 export interface BooksState {
   books: Book[];
@@ -31,9 +24,9 @@ export interface BooksState {
 }
 
 export enum BooksActionTypes {
-  FETCH_BOOKS_REQUEST = "FETCH_BOOKS_REQUEST",
-  FETCH_BOOKS_SUCCESS = "FETCH_BOOKS_SUCCESS",
-  FETCH_BOOKS_FAILURE = "FETCH_BOOKS_FAILURE",
+  FETCH_BOOKS_REQUEST = 'FETCH_BOOKS_REQUEST',
+  FETCH_BOOKS_SUCCESS = 'FETCH_BOOKS_SUCCESS',
+  FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE'
 }
 
 interface FetchBooksRequestAction {

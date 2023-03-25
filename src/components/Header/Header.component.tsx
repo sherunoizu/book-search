@@ -1,12 +1,14 @@
-import { Box } from "@mui/material";
+import React from 'react';
 
-import { Link } from "react-router-dom";
+import { Box } from '@mui/material';
 
-import { HomeIcon } from "../HomeIcon/HomeIcon.component";
+import { Link } from 'react-router-dom';
 
-export const Header = () => (
-  <Box marginBottom="25px">
-    <Link to="/">
+import { HomeIcon } from '../HomeIcon/HomeIcon.component';
+
+export const Header: React.FC = () => (
+  <Box marginBottom='25px'>
+    <Link to='/'>
       <HomeIcon />
     </Link>
   </Box>

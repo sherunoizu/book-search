@@ -1,4 +1,4 @@
-import { SelectChangeEvent } from "@mui/material";
+import { SelectChangeEvent } from '@mui/material';
 
 export interface CustomSelectProps {
   value: string;

@@ -1,6 +1,6 @@
-import { BookList, SearchBar } from "../../components";
+import React from 'react';
 
-import { Container } from "@mui/material";
+import { BookList, SearchBar } from '../../components';
 
 export const MainPage = () => (
   <>
