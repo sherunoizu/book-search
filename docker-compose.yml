@@ -1,0 +1,10 @@
+services:
+  web-app:
+    build:
+      context: .
+    ports:
+      - "3000:80"
+    volumes:
+      - ./src:/src/app
+    command: >
+      sh -c "nginx -g 'daemon off;'"
