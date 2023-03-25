@@ -1,4 +1,4 @@
-import { Book } from "../../store/types";
+import { Book } from '../../store/types';
 
 export interface BookItemProps {
   book: Book;

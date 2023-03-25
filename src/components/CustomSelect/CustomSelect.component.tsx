@@ -1,37 +1,28 @@
-import React from "react";
+import React from 'react';
 
-import {
-  Select,
-  SelectChangeEvent,
-  MenuItem,
-  InputLabel,
-  Box,
-} from "@mui/material";
+import { Select, SelectChangeEvent, MenuItem, InputLabel, Box } from '@mui/material';
 
-import { CustomSelectProps } from "./CustomSelect.types";
+import { CustomSelectProps } from './CustomSelect.types';
 
 export const CustomSelect: React.FC<CustomSelectProps> = ({
   value,
   onChange,
   optionValues,
-  labelName,
+  labelName
 }) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     onChange(event);
   };
   return (
-    <Box width="200px">
-      <InputLabel
-        htmlFor={labelName.toLowerCase()}
-        id={labelName.toLowerCase()}
-      >
+    <Box width='200px'>
+      <InputLabel htmlFor={labelName.toLowerCase()} id={labelName.toLowerCase()}>
         {labelName}:
       </InputLabel>
       <Select
         labelId={labelName.toLowerCase()}
         name={labelName.toLowerCase()}
         id={labelName.toLowerCase()}
-        size="small"
+        size='small'
         value={value}
         onChange={handleChange}
         fullWidth
